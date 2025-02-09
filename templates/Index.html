@@ -59,7 +59,7 @@
         /* Enhanced Navbar Styling */
 
         .navbar {
-            font-size: large;
+            font-size: medium;
             z-index: 1;
             position: fixed;
             top: 0;
@@ -72,6 +72,7 @@
             font-size: 1.5em;
             color: #1bdac7 !important;
             transition: color 0.3s ease;
+            
         }
 
         .navbar-brand:hover {
@@ -91,15 +92,39 @@
             color: #1bdac7 !important;
             /* Makes text brighter on hover */
         }
-
+        .nav-item{
+            margin-left: 50px;
+            margin-right: 50px;
+            padding-left: 20px;
+            padding-right: 20px;
+            transition: transform 0.5s ease;
+        }
+        .nav-item:hover{
+            transform: translate(3px, -3px) scale(1.1);
+        }
+        .Heading{
+            font-size: 2.5rem;
+            font-weight: bold;
+            font-style: italic;
+            padding: 10px;
+            margin-top: 100px;
+        }
+        .sub-para{
+            font-size: small;
+            color:  rgb(215, 237, 250);
+        }
         /* Main Container Styling */
         .container-main {
-
+          
             color: #e0e0e0;
             border-radius: 15px;
             padding: 40px;
-            margin-top: 30px;
+            margin-top: 100px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+        }
+        .container-main:hover{
+            box-shadow:  0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
 
@@ -108,22 +133,6 @@
 
         }
 
-        .Heading {
-            width: 50%;
-            font-size: 4rem;
-            text-align: left;
-            padding-left: 50px;
-            margin-top: 80px;
-            padding-top: 100px;
-            height: 550px;
-            white-space: nowrap;
-            /* Prevents text from wrapping */
-            overflow: hidden;
-            /* Hides the text initially */
-            animation: typing 3s ease-in-out forwards;
-
-
-        }
 
         /* Animation for smooth typing effect */
         @keyframes typing {
@@ -136,43 +145,32 @@
             }
         }
 
-        .subheading {
-            text-align: left;
-            width: 400px;
-            height: 40px;
-            font-size: 1rem;
-            color: rgb(215, 237, 250);
-
-        }
-
-        .showmore {
-            font-size: small;
-            background-color: transparent;
-            color: aliceblue;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 7px;
-        }
-
-        .showmore:hover {
-            background-color: aliceblue;
-            color: black;
-        }
-
+       
         html {
             scroll-behavior: smooth;
         }
 
         .form-control {
+            color: #444;
             background: transparent;
             border: 1px solid #1bdac7;
             color: #333;
         }
 
         .container-main {
-            background-color: rgb(208, 241, 255);
+            background: linear-gradient(135deg, #c8eeff, #82effd);
+            width: 800px;
             padding-top: 90px;
             color: #444;
+            overflow: hidden;
+            
+            transition: transform 0.5s ease;
+        }
+        .container-main:hover{
+            transform: translate(5px, -5px) scale(1.1);
+            box-shadow: #333;
+            
+            
         }
 
         .form-control:focus {
@@ -303,6 +301,13 @@
         .modal.active {
             display: flex;
         }
+        .footer{
+            margin-top: 150px;
+            height: 70px;
+            width: 100%;
+            background-color: #56e5e5;
+            bottom: 0%;
+        }
     </style>
 </head>
 
@@ -311,7 +316,7 @@
     <div class="wholecontainer">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand ms-2" href="#">HEALTHIFY</a>
+                <a class="navbar-brand ms-2" href="/">HEALTHIFY</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -320,34 +325,33 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                         <li class="nav-item"><a class="nav-link" href="/developer">Developer</a></li>
                         <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
                     </ul>
 
                 </div>
             </div>
-        </nav>
-
-        <!-- Main Form -->
-        <div class="Heading">
-            <h1>Your Personalized Medicine Guide</h1>
-            <div class="subheading">
-                <p>Get personalized health advice based on your medical history, lifestyle, and preferences.<br>Discover
-                    medicine recommendations crafted for your individual needs and lifestyle.<br>Take control of your
-                    health with personalized insights.</p>
-            </div>
-            <button class="showmore">show more</button>
+        </nav> 
+       <div class="Heading">
+            <h1 id="h1_heading"></h1>
+            <p class="sub-para" id="h2_heading"></p>
         </div>
 
 
 
+        
+        <!-- Main Form -->
         <div class="container container-main">
+            
             <form action="/predict" method="post">
+
                 <div class="form-group">
-                    <label for="symptoms">Select Symptoms:</label>
-                    <input type="text" class="form-control text-light" id="symptoms" name="symptoms"
-                        placeholder="Type symptoms like itching, sleeping, aching, etc.">
+                    <label for="symptoms">Select Symptoms</label>
+                    <div class="inputwitharrow"></div>
+                    <input type="text" class="form-control" id="symptoms" name="symptoms"
+                        placeholder="Type symptoms like itching, skin_rash, stomach_pain, vomiting, high_fever etc.">
+                      
+                        
                 </div>
                 <button type="button" id="startSpeechRecognition" class="btn btn-primary-custom btn-custom mt-3">
                     Start Speech Recognition
@@ -449,43 +453,41 @@
                 </div>
             </div>
         </div>
+        <div class="footer">
+            <p>@2025 all rights reserved</p>
+        </div>
     
     <script>
-        // JavaScript to handle the smooth scroll with custom timing
-        document.querySelector('.showmore').addEventListener('click', function () {
-            var targetElement = document.querySelector('.container-main');
-            var startPosition = window.pageYOffset;  // Current scroll position
-            var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;  // Target position
-            var distance = targetPosition - startPosition;  // Distance to scroll
-            var duration = 1300;  // Duration of the scroll (in milliseconds) – increased for slower scroll
-            var startTime = null;  // To track the start time of the animation
+        
+var i = 0;
+var j =0;
+var txt = 'Start Your Journey to Better Health with Healthify'; /* The text */
+var txt2='Quickly identify potential health conditions by entering your symptoms or speaking them out loud.'
+var speed = 50; /* The speed/duration of the effect in milliseconds */
 
-            // Easing function for smooth scroll effect
-            function easeInOutQuad(t) {
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-            }
+function typeWriter() {
+  if (i < txt.length) {
+    document.getElementById("h1_heading").innerHTML += txt.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
 
-            // Animation function for custom smooth scroll
-            function smoothScroll(timestamp) {
-                if (!startTime) startTime = timestamp;  // Set start time if not yet set
-                var timeElapsed = timestamp - startTime;  // Time passed since the start of the animation
-                var scrollProgress = Math.min(timeElapsed / duration, 1);  // Ensure it doesn't go over 1
+function typeWrite2() {
+  if (j < txt2.length) {
+    document.getElementById("h2_heading").innerHTML += txt2.charAt(j);
+    j++;
+    setTimeout(typeWrite2, speed);
+  }
+}
+setTimeout(function(){
+    typeWriter();
+},100);
 
-                // Apply easing for smooth scrolling effect
-                var easedProgress = easeInOutQuad(scrollProgress);
+ setTimeout(function(){
+    typeWrite2();
+    },3000);
 
-                // Scroll the window according to the eased progress
-                window.scrollTo(0, startPosition + distance * easedProgress);
-
-                if (timeElapsed < duration) {
-                    // If the duration hasn't finished, continue animating
-                    requestAnimationFrame(smoothScroll);
-                }
-            }
-
-            // Start the animation
-            requestAnimationFrame(smoothScroll);
-        });
 
         const startSpeechRecognitionButton = document.getElementById('startSpeechRecognition');
         const transcriptionDiv = document.getElementById('transcription');
@@ -502,11 +504,21 @@
                 transcriptionDiv.textContent = result;
                 symptomsInput.value = result;
             };
-
-            recognition.start();
+          
+          recognition.start();
         }
 
         document.addEventListener("DOMContentLoaded", function () {
+        const resultContainer = document.getElementsByClassName('result-container');
+        const diseaseModal = document.getElementById('diseaseModal');
+    
+    // Get the predicted disease value from the Jinja variable
+    const predictedDisease = "{{ predicted_disease }}"; // Directly pass it
+
+    if (predictedDisease) {
+        // Automatically show the Disease Modal
+        diseaseModal.classList.add('active');
+    }
             // Find all modals
             const modals = document.querySelectorAll(".modal");
 
@@ -520,7 +532,6 @@
                 });
             });
         });
-
 
         const toggleButtons = document.querySelectorAll('.toggle-button');
         const modals = document.querySelectorAll('.modal');

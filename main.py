@@ -1,10 +1,14 @@
+import os
+print("Current Working Directory:", os.getcwd())
+
 from flask import Flask, request, render_template, jsonify  # Import jsonify
 import numpy as np
 import pandas as pd
 import pickle
 
 
-# flask app
+# flask appw
+
 app = Flask(__name__, static_folder='static')
 
 
@@ -68,28 +72,32 @@ def index():
 def home():
     if request.method == 'POST':
         symptoms = request.form.get('symptoms')
-        # mysysms = request.form.get('mysysms')
-        # print(mysysms)
-        print(symptoms)
-        if symptoms =="Symptoms":
-            message = "Please either write symptoms or you have written misspelled symptoms"
+        
+        if not symptoms:
+            message = "Please either write symptoms or check for any misspelled symptoms."
             return render_template('index.html', message=message)
         else:
-
             # Split the user's input into a list of symptoms (assuming they are comma-separated)
-            user_symptoms = [s.strip() for s in symptoms.split(',')]
-            # Remove any extra characters, if any
+            user_symptoms = [s.strip() for s in symptoms.lower().split(',')]
+            # Remove any extra characters, if anySS
             user_symptoms = [symptom.strip("[]' ") for symptom in user_symptoms]
-            predicted_disease = get_predicted_value(user_symptoms)
-            dis_des, precautions, medications, rec_diet, workout = helper(predicted_disease)
 
-            my_precautions = []
-            for i in precautions[0]:
-                my_precautions.append(i)
+            # Check if the entered symptoms are valid (i.e., they exist in the symptoms_dict)
+            invalid_symptoms = [symptom for symptom in user_symptoms if symptom not in symptoms_dict]
+            
+            if invalid_symptoms:
+                message = f"Invalid symptom(s): {', '.join(invalid_symptoms)}. Please check for any misspelled symptoms or provide valid ones."
+                return render_template('index.html', message=message)
+            else:
+                # Proceed with disease prediction if all symptoms are valid
+                predicted_disease = get_predicted_value(user_symptoms)
+                dis_des, precautions, medications, rec_diet, workout = helper(predicted_disease)
 
-            return render_template('index.html', predicted_disease=predicted_disease, dis_des=dis_des,
-                                   my_precautions=my_precautions, medications=medications, my_diet=rec_diet,
-                                   workout=workout)
+                my_precautions = [i for i in precautions[0]]
+
+                return render_template('index.html', predicted_disease=predicted_disease, dis_des=dis_des,
+                                       my_precautions=my_precautions, medications=medications, my_diet=rec_diet,
+                                       workout=workout)
 
     return render_template('index.html')
 
@@ -118,3 +126,4 @@ def blog():
 if __name__ == '__main__':
 
     app.run(debug=True)
+
