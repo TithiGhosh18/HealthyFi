@@ -11,9 +11,6 @@ import pickle
 
 app = Flask(__name__, static_folder='static')
 
-
-
-
 # Use absolute paths with os.path.join:
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
