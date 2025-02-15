@@ -13,17 +13,20 @@ app = Flask(__name__, static_folder='static')
 
 
 
-# load databasedataset===================================
-sym_des = pd.read_csv("Datasheets/symtoms_df.csv")
-precautions = pd.read_csv("Datasheets/precautions_df.csv")
-workout = pd.read_csv("Datasheets/workout_df.csv")
-description = pd.read_csv("Datasheets/description.csv")
-medications = pd.read_csv('Datasheets/medications.csv')
-diets = pd.read_csv("Datasheets/diets.csv")
 
+# Use absolute paths with os.path.join:
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# load model===========================================
-svc = pickle.load(open('models/svc.pkl','rb'))
+sym_des = pd.read_csv(os.path.join(BASE_DIR, "Datasheets", "symtoms_df.csv"))
+precautions = pd.read_csv(os.path.join(BASE_DIR, "Datasheets", "precautions_df.csv"))
+workout = pd.read_csv(os.path.join(BASE_DIR, "Datasheets", "workout_df.csv"))
+description = pd.read_csv(os.path.join(BASE_DIR, "Datasheets", "description.csv"))
+medications = pd.read_csv(os.path.join(BASE_DIR, "Datasheets", "medications.csv"))
+diets = pd.read_csv(os.path.join(BASE_DIR, "Datasheets", "diets.csv"))
+
+# For the model:
+svc = pickle.load(open(os.path.join(BASE_DIR, "models", "svc.pkl"), 'rb'))
 
 
 #============================================================
